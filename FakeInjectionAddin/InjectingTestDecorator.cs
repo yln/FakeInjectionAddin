@@ -37,7 +37,7 @@ namespace FakeInjectionAddin
         return false;
 
       var attributes = testMethod.Method.GetCustomAttributes (inherit: true);
-      return attributes.Any (a => a.GetType().Name == "InjectFakes");
+      return attributes.Any (a => a.GetType().Name.StartsWith ("InjectFakes"));
     }
 
     private object CreateFake (ParameterInfo parameter)
