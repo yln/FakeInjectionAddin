@@ -13,6 +13,11 @@ A [NUnit][nunit] addin that uses [FakeItEasy!][fake-it-easy] to inject fakes int
 ### Example
 
 ```c#
+[AttributeUsage (AttributeTargets.Method)]
+public class InjectFakesAttribute : Attribute { }
+```
+
+```c#
 [Test, InjectFakes]
 public void Test (IMyInterface fake)
 {
@@ -26,8 +31,8 @@ public void Test (IMyInterface fake)
 
 ### Require Addin (optional)
 
-Use the RequiredAddin attribute to signal that the addin is required to run your tests.
-This is optional but may be helpful to avoid confusion.
+You may use the `RequiredAddin` attribute to signal test runners that the addin is required to run your tests.
+This step is optional but may be helpful to avoid confusion.
 
 ```c#
 [assembly: NUnit.Framework.RequiredAddin("FakeInjectionAddin")]
