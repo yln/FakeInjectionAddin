@@ -14,7 +14,7 @@ A [NUnit][nunit] addin that uses [FakeItEasy!][fake-it-easy] to inject fakes int
 
 ```c#
 [AttributeUsage (AttributeTargets.Method)]
-public class InjectFakesAttribute : Attribute { }
+class InjectFakesAttribute : Attribute { }
 ```
 
 ```c#
