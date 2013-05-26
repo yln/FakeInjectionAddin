@@ -4,25 +4,19 @@ FakeInjectionAddin
 A [NUnit][nunit] addin that uses [FakeItEasy!][fake-it-easy] to inject fakes into test methods.
 
 
-### How to ?
-* Copy `FakeInjectionAddin.dll` and `FakeItEasy.dll` into `<NUnit-directory>/addins`.
-* Create a custom attribute named `InjectFakes`.
-* Apply this attribute to test methods that you want to be injected with fakes.
+### Setup
+
+Copy `FakeInjectionAddin.dll` and `FakeItEasy.dll` into `<NUnit-directory>/addins`.
 
 
 ### Example
 
 ```c#
-[AttributeUsage (AttributeTargets.Method)]
-class InjectFakesAttribute : Attribute { }
-```
-
-```c#
-[Test, InjectFakes]
-public void Test (IMyInterface fake)
+[Test]
+public void Test (IFoo foo)
 {
   // Use fake in test.
-  A.CallTo (() => fake.Blub()).Returns ("hello");
+  A.CallTo (() => foo.Bar()).Returns ("baz");
 
   // ...
 }
