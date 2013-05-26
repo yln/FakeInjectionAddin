@@ -18,7 +18,7 @@ namespace FakeInjectionAddin
       if (testMethod == null)
         return test;
 
-      if (!ShouldInjectFakes (testMethod))
+      if (!RequiresFakeInjection (testMethod))
         return test;
 
       var parameters = testMethod.Method.GetParameters();
@@ -30,14 +30,20 @@ namespace FakeInjectionAddin
       return test;
     }
 
-    private bool ShouldInjectFakes (TestMethod testMethod)
+    private bool RequiresFakeInjection (TestMethod testMethod)
     {
       // We only need to inject arguments if the test isn't already runnable.
       if (testMethod.RunState != RunState.NotRunnable)
         return false;
 
-      var attributes = testMethod.Method.GetCustomAttributes (inherit: true);
-      return attributes.Any (a => a.GetType().Name.StartsWith ("InjectFakes"));
+      // The test method and class is not marked [Ignored].
+      return !IsIgnored (testMethod.Method) && !IsIgnored (testMethod.Method.DeclaringType);
+    }
+
+    private bool IsIgnored (MemberInfo member)
+    {
+      var attributes = member.GetCustomAttributes (inherit: true);
+      return attributes.Any (a => a.GetType().Name.StartsWith ("Ignore"));
     }
 
     private object CreateFake (ParameterInfo parameter)
